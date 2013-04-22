@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="OrderFeedGenerator">
+    <xsl:stylesheet exclude-result-prefixes="fn m0 m1" version="2.0"
+        xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
+        xmlns:m0="http://ws.cs.ucsb.edu"
+        xmlns:m1="http://ws.cs.ucsb.edu/xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+        <xsl:output indent="yes" method="xml" omit-xml-declaration="yes"/>
+        <xsl:param name="SystemDate"/>
+        <xsl:param name="SystemURL"/>
+        <xsl:template match="m0:getAllOrdersResponse">
+            <feed xmlns="http://www.w3.org/2005/Atom">
+                <title>Drinks to make</title>
+                <link rel="self">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="concat($SystemURL, 'orders')"/>
+                    </xsl:attribute>
+                </link>
+                <updated>
+                    <xsl:value-of select="$SystemDate"/>
+                </updated>
+                <author>
+                    <name>Order Management System</name>
+                </author>
+                <id>urn:starbucks:barista:orders-list</id>
+                <xsl:apply-templates select="m0:return"/>
+            </feed>
+        </xsl:template>
+        <xsl:template match="m0:return">
+            <entry xmlns="http://www.w3.org/2005/Atom">
+                <id>
+                    <xsl:value-of select="concat($SystemURL, 'order/', m1:orderId)"/>
+                </id>
+                <title>
+                    <xsl:value-of select="concat('Order ID - ', m1:orderId)"/>
+                </title>
+                <updated>
+                    <xsl:value-of select="m1:timestamp"/>
+                </updated>
+                <link rel="alternate" type="application/xml">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="concat($SystemURL, 'order/', m1:orderId)"/>
+                    </xsl:attribute>
+                </link>
+                <content type="application/xml">
+                    <order xmlns="http://starbucks.example.org">
+                        <drink>
+                            <xsl:value-of select="m1:name"/>
+                        </drink>
+                        <additions>
+                            <xsl:value-of select="m1:additions"/>
+                        </additions>
+                        <cost>
+                            <xsl:value-of select="m1:price"/>
+                        </cost>
+                    </order>
+                    <link rel="edit" type="application/atom+xml">
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="concat($SystemURL, 'barista/order/', m1:orderId)"/>
+                        </xsl:attribute>
+                    </link>
+                </content>
+            </entry>
+        </xsl:template>
+    </xsl:stylesheet>
+</localEntry>

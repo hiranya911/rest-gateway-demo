@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://ws.apache.org/ns/synapse">
-	<api context="/order" name="StarbucksOrderAPI" xmlns:sb="http://starbucks.example.org"
+<definitions xmlns="http://ws.apache.org/ns/synapse" xmlns:sb="http://starbucks.example.org"
 		xmlns:ucsb="http://ws.cs.ucsb.edu" xmlns:xsd="http://ws.cs.ucsb.edu/xsd">
+	<api context="/order" name="StarbucksOrderAPI">
 		<resource methods="POST" url-mapping="/">
 			<inSequence>
 				<property expression="$axis2:SERVICE_PREFIX" name="STARBUCKS_HOST_NAME" />
 				<payloadFactory>
 					<format>
-						<ucsb:addOrder xmlns:ucsb="http://ws.cs.ucsb.edu">
+						<ucsb:addOrder>
 							<ucsb:order>
-								<xsd:additions xmlns:xsd="http://ws.cs.ucsb.edu/xsd">$1</xsd:additions>
-								<xsd:name xmlns:xsd="http://ws.cs.ucsb.edu/xsd">$2</xsd:name>
+								<xsd:name>$1</xsd:name>
+								<xsd:additions>$2</xsd:additions>								
 							</ucsb:order>
 						</ucsb:addOrder>
 					</format>
@@ -95,7 +95,53 @@
 						<sequence key="StarbucksMissingOrder" />
 					</else>
 				</filter>
-				<send/>				
+				<send />
+			</outSequence>
+		</resource>
+	</api>
+	<api name="StarbucksOrderListAPI" context="/orders">
+		<resource methods="GET" faultSequence="StarbucksFault">
+			<inSequence>
+				<property name="HTTP_METHOD" value="POST" scope="axis2" />
+				<property name="STARBUCKS_SYSTEM_URL" expression="$axis2:SERVICE_PREFIX" />
+				<property name="STARBUCKS_ACCEPT" expression="$trp:Accept" />
+				<payloadFactory>
+					<format>
+						<ucsb:getAllOrders />
+					</format>
+				</payloadFactory>
+				<header name="Action" value="urn:getAllOrders"/>
+				<send>
+					<endpoint key="ServiceEndpoint" />
+				</send>
+			</inSequence>
+			<outSequence>
+				<switch source="$ctx:STARBUCKS_ACCEPT">
+					<case regex=".*atom.*">
+						<sequence key="StarbucksAtomFeed" />
+					</case>
+					<case regex=".*text/html.*">
+						<xslt key="OrderHtmlGenerator">
+							<property name="SystemDate"
+								expression='get-property("SYSTEM_DATE", "yyyy-MM-dd&apos;T&apos;hh:mm:ss&apos;Z&apos;")' />
+							<property name="SystemURL" expression="$ctx:STARBUCKS_SYSTEM_URL" />
+						</xslt>
+						<property name="ContentType" value="text/html" scope="axis2" />
+					</case>
+					<case regex=".*json.*">
+						<xslt key="RemoveNS" />
+						<property name="messageType" value="application/json"
+							scope="axis2" />
+					</case>
+					<case regex=".*application/xml.*">
+						<property name="messageType" value="application/xml"
+							scope="axis2" />
+					</case>
+					<default>
+						<sequence key="StarbucksAtomFeed" />
+					</default>
+				</switch>
+				<send />
 			</outSequence>
 		</resource>
 	</api>

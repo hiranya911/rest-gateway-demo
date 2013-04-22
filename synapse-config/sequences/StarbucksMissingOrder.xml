@@ -1,10 +1,13 @@
-<sequence name="StarbucksMissingOrder" xmlns="http://ws.apache.org/ns/synapse">
-        <property name="HTTP_SC" value="404" scope="axis2" />
-        <payloadFactory>
-                <format>
-                        <message xmlns="http://starbucks.example.org">
-                                <text>No order exists by the specified ID</text>
-                        </message>
-                </format>
-        </payloadFactory>
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="StarbucksMissingOrder">
+    <property action="set" name="HTTP_SC" scope="axis2" type="STRING" value="404"/>
+    <payloadFactory>
+        <format>
+            <message>
+                <text>No order exists by the specified ID</text>
+            </message>
+        </format>
+        <args/>
+    </payloadFactory>
+    <log category="INFO" level="full" separator=","/>
 </sequence>

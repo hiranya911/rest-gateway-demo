@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="OrderHtmlGenerator">
+    <xsl:stylesheet exclude-result-prefixes="fn m0 m1" version="2.0"
+        xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
+        xmlns:m0="http://ws.cs.ucsb.edu"
+        xmlns:m1="http://ws.cs.ucsb.edu/xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+        <xsl:output indent="yes" method="xml" omit-xml-declaration="yes"/>
+        <xsl:param name="SystemDate"/>
+        <xsl:param name="SystemURL"/>
+        <xsl:template match="m0:getAllOrdersResponse">
+            <html xmlns="">
+                <head>
+                    <title>Drinks to make</title>
+                </head>
+                <body>
+                    <h1>Pending Orders</h1>
+                    <table border="1">
+                        <tr>
+                            <td>ID</td>
+                            <td>urn:starbucks:barista:coffees-to-make</td>
+                        </tr>
+                        <tr>
+                            <td>Author</td>
+                            <td>Barista System</td>
+                        </tr>
+                        <tr>
+                            <td>Updated</td>
+                            <td>
+                                <xsl:value-of select="$SystemDate"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <p/>
+                    <table border="1">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Drink Name</th>
+                            <th>Additions</th>
+                            <th>Cost</th>
+                            <th>URL</th>
+                        </tr>
+                        <xsl:apply-templates select="m0:return"/>
+                    </table>
+                </body>
+            </html>
+        </xsl:template>
+        <xsl:template match="m0:return">
+            <tr xmlns="">
+                <td>
+                    <xsl:value-of select="m1:orderId"/>
+                </td>
+                <td>
+                    <xsl:value-of select="m1:name"/>
+                </td>
+                <td>
+                    <xsl:value-of select="m1:additions"/>
+                </td>
+                <td>
+                    <xsl:value-of select="m1:price"/>
+                </td>
+                <td>
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="concat($SystemURL, 'order/', m1:orderId)"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="m1:orderId"/>
+                    </a>
+                </td>
+            </tr>
+        </xsl:template>
+    </xsl:stylesheet>
+</localEntry>
