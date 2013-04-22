@@ -2,7 +2,7 @@
 <definitions xmlns="http://ws.apache.org/ns/synapse" xmlns:sb="http://starbucks.example.org"
 		xmlns:ucsb="http://ws.cs.ucsb.edu" xmlns:xsd="http://ws.cs.ucsb.edu/xsd">
 	<api context="/order" name="StarbucksOrderAPI">
-		<resource methods="POST" url-mapping="/">
+		<resource methods="POST" url-mapping="/" faultSequence="StarbucksFault">
 			<inSequence>
 				<property expression="$axis2:SERVICE_PREFIX" name="STARBUCKS_HOST_NAME" />
 				<payloadFactory>
@@ -31,7 +31,7 @@
 				<send />
 			</outSequence>
 		</resource>
-		<resource methods="GET PUT DELETE" uri-template="/{orderId}">
+		<resource methods="GET PUT DELETE" uri-template="/{orderId}" faultSequence="StarbucksFault">
 			<inSequence>
 				<property expression="$axis2:SERVICE_PREFIX" name="STARBUCKS_HOST_NAME" />
 				<switch source="$ctx:REST_METHOD">

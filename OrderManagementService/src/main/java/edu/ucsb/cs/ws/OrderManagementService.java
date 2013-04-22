@@ -19,12 +19,7 @@ public class OrderManagementService {
 	}
 	
 	public Order getOrder(String orderId) {
-		Order order = orders.get(orderId);
-		if (order != null) {
-			return order;
-		} else {
-			throw new OrderManagementException("No order exists by thge ID: " + orderId);
-		}
+		return orders.get(orderId);		
 	}
 	
 	public Order[] getAllOrders() {
@@ -37,20 +32,16 @@ public class OrderManagementService {
 			orders.put(order.getOrderId(), order);
 			return order;
 		} else {
-			throw new OrderManagementException("No order exists by thge ID: " + order.getOrderId());
+			return null;
 		}
 	}
 	
 	public Order deleteOrder(String orderId) {
-		if (orders.containsKey(orderId)) {
-			return orders.remove(orderId);
-		} else {
-			throw new OrderManagementException("No order exists by thge ID: " + orderId);
-		}
+		return orders.remove(orderId);		
 	}
 	
 	private double getPrice(Order order) {
-		double price = getPriceForItem(order.getName(),false);
+		double price = getPriceForItem(order.getName(), false);
 		String additions = order.getAdditions();
 		if (additions != null) {
 			for (String addition : additions.split(",")) {
@@ -61,6 +52,9 @@ public class OrderManagementService {
 	}
 	
 	private double getPriceForItem(String name, boolean addition) {
+		if (name == null || "".equals(name)) {
+			return 0.0;
+		}
 		Random rand = new Random();
 		int limit = addition ? 2 : 6;
 		if (!priceList.containsKey(name)) {
