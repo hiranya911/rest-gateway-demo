@@ -3,15 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to REST Gateway Demo's documentation!
-=============================================
+Synapse REST Gateway Demo
+=========================
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-
+   intro
+   synapse
+   tutorial
 
 Indices and tables
 ==================
