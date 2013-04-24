@@ -1,7 +1,7 @@
 REST Gateway Demo
 ==================
 
-Author: Hiranya Jayathialaka
+Author: Hiranya Jayathilaka
 
 This is a sample application that demonstrates using Apache Synapse (http://synapse.apache.org) as a
 REST-to-SOAP gateway. This application relies on the REST API mediation support provided by Synapse
