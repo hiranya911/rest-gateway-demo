@@ -102,7 +102,7 @@ Now we have our backend SOAP service up and running. So lets get started with th
 
 Running the REST Client
 -----------------------
-In this section we will look at how to run a REST client against our REST gateway and consume the backend SOAP service. For an explanation on how the gateway is configured please refer the REST Gateway Implementation section.
+In this section we will look at how to run a REST client against our REST gateway and consume the backend SOAP service. For an explanation on how the gateway is configured please refer :doc:`impl`.
 
 All the sample client scripts and example data files are available in the ``cleint`` directory of this sample package.
 

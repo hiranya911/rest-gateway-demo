@@ -14,6 +14,7 @@ Contents:
    intro
    synapse
    tutorial
+   impl
 
 Indices and tables
 ==================

@@ -105,6 +105,8 @@ Configuration Language
 ----------------------
 The configuration language specification for Synapse can be found at official `Synapse documentation <http://synapse.apache.org/userguide/config.html>`_. The language is simple, intuitive and XML-based. Therefore most services and message flows can be constructed for Synapse by manually editing XML. If graphical tooling support is required, `WSO2 Developer Studio <http://wso2.com/products/developer-studio/>`_ which is based on `Eclipse <http://www.eclipse.org>`_ can be used.
 
+Even though this is a high-level metalanguage, it supports all the faimilar constructs of a traditional programming language. If-else constructs, switch-case constructs and try-catch constructs are built into the language in the form of various mediators which can be used to construct powerful message flows with comprehensive control and data flow.
+
 WSO2 ESB
 --------
 For this demonstration we will not be using vanilla Apache Synapse. Rather we will be using `WSO2 ESB <http://wso2.com/products/enterprise-service-bus/>`_ which is an open source ESB based on Synapse. WSO2 ESB uses Synapse as its mediation engine and hence supports all the features (and more) that Synapse does. The same XML-based metalanguage used to configure Synapse is used to configure WSO2 ESB as well. This means any valid Synapse configuration is also a WSO2 ESB configuration and vice versa. In addition to the set of features provided by Synapse, WSO2 ESB provides excellent UI support, powerful management capabilities and flexible tooling support.
