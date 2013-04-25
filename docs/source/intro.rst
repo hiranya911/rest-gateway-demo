@@ -35,6 +35,6 @@ The set of Synapse configuration files for this demo can be found in the ``esb/s
 
 Sample Client Scripts
 ---------------------
-In order to interact with this demo application, some RESTful client tool is necessary. A simple command line tool such as ``curl`` can be used for this purpose. In order to simplyfy the testing procedure, a set of sample ``curl`` scripts are provided in the ``client`` directory. 
+In order to interact with this demo application, some RESTful client tool is necessary. A simple command line tool such as ``curl`` can be used for this purpose. In order to simplyfy the testing procedure, a set of sample Python scripts (based on httplib) are provided in the ``client`` directory. 
 
 You may use any other REST client application to interact with this demo and try it out. If you are looking for a more UI oriented client tool, please check out the `Chrome Advanced REST Client <https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US>`_.
