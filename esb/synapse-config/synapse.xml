@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse" xmlns:sb="http://starbucks.example.org"
 		xmlns:ucsb="http://ws.cs.ucsb.edu" xmlns:xsd="http://ws.cs.ucsb.edu/xsd">
-	<api context="/order" name="StarbucksOrderAPI">
+	<api name="StarbucksOrderAPI" context="/order">
 		<resource methods="POST" url-mapping="/" faultSequence="StarbucksFault">
 			<inSequence>
 				<property expression="$axis2:SERVICE_PREFIX" name="STARBUCKS_HOST_NAME" />

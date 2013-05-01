@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint xmlns="http://ws.apache.org/ns/synapse" name="ServiceEndpoint">
-    <address format="soap11" statistics="disable" trace="disable" uri="http://localhost:9763/services/OrderManagementService"/>        
+    <address format="soap11" uri="http://localhost:9763/services/OrderManagementService"/>
 </endpoint>
